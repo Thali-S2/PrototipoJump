@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
@@ -14,17 +15,33 @@ public class PlayerController : MonoBehaviour
     private Animator playerAnim;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
-
+    private InputAction jumpAction;
+    [SerializeField] InputActionAsset inputActions;
     private int currentLifes;
     [SerializeField] int maxLifes;
     [SerializeField] HudManager hudManager;
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        jumpAction = inputActions.FindAction("Jump");
+    }
+
+    private void OnEnable()
+    {
+        jumpAction.Enable();
+    }
+
+    private void OnDisable()
+    {
+        jumpAction.Disable();
+    }
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
         playerAnim = GetComponent<Animator>();
+        jumpAction = inputActions.FindAction("Jump");
         currentLifes = maxLifes;
         hudManager.updateLifes(currentLifes);
     }
@@ -32,7 +49,7 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && isOnGround && !gameOver)
+        if (jumpAction.WasPressedThisFrame() && isOnGround && !gameOver)
         {
             playerRb.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
             isOnGround = false;
