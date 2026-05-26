@@ -20,8 +20,7 @@ public class SpawnManager : MonoBehaviour
 
     void SpawnObstable ()
     {
-        if (!PlayerController.IsGameOver()) {
-            Instantiate(obstaclePrefab, spawnPos, obstaclePrefab.transform.rotation);
+        if (!playerController.IsGameOver()) {
             GameObject obstacle = Instantiate(obstaclePrefab, spawnPos, obstaclePrefab.transform.rotation);
             MoveLeft moveLeftScript = obstacle.GetComponent<MoveLeft>();
             moveLeftScript.Init(playerController);

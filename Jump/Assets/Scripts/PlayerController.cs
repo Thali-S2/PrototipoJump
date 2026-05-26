@@ -10,7 +10,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float jumpForce = 10;
     [SerializeField] float gravityModifier;
     private bool isOnGround;
-    private static bool gameOver;
+    private bool gameOver;
     private Animator playerAnim;
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
         explosionParticle.Play();
     }
 
-    public static bool IsGameOver()
+    public bool IsGameOver()
     {
         return gameOver;
     }

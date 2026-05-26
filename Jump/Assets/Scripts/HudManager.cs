@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-using UnityEngine;
+
 
 public class HudManager : MonoBehaviour
 {
@@ -11,14 +11,5 @@ public class HudManager : MonoBehaviour
     {
         textLife.text = value.ToString();
     }
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    
 }
