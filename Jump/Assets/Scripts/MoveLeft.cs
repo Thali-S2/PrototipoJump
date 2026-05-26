@@ -8,7 +8,7 @@ public class MoveLeft : MonoBehaviour
     private float speed = 25;
     private float leftBound = -10;
     
-    //[SerializeField] private PlayerController playerController;
+    [SerializeField] private PlayerController playerController;
 
     public void Init(PlayerController script)
     {

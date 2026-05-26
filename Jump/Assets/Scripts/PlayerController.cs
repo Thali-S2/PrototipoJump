@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerController : MonoBehaviour
@@ -13,12 +15,18 @@ public class PlayerController : MonoBehaviour
     public ParticleSystem explosionParticle;
     public ParticleSystem dirtParticle;
 
+    private int currentLifes;
+    [SerializeField] int maxLifes;
+    [SerializeField] HudManager hudManager;
+
     // Start is called before the first frame update
     void Start()
     {
         playerRb = GetComponent<Rigidbody>();
         Physics.gravity *= gravityModifier;
         playerAnim = GetComponent<Animator>();
+        currentLifes = maxLifes;
+        hudManager.updateLifes(currentLifes);
     }
 
     // Update is called once per frame
@@ -41,13 +49,29 @@ public class PlayerController : MonoBehaviour
             dirtParticle.Play();
         } else if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("Game Over");
+            /*Debug.Log("Game Over");
             gameOver = true;
             playerAnim.SetInteger("DeathType_int", 1);
             playerAnim.SetBool("Death_b", true);
             dirtParticle.Stop();
-            explosionParticle.Play();
+            explosionParticle.Play();*/
+            currentLifes--;
+            hudManager.updateLifes(currentLifes);
+            if (currentLifes == 0)
+            {
+                processGameOver();
+            }
         }     
+    }
+
+    private void processGameOver()
+    {
+        Debug.Log("Game Over");
+        gameOver = true;
+        playerAnim.SetInteger("DeathType_int", 1);
+        playerAnim.SetBool("Death_b", true);
+        dirtParticle.Stop();
+        explosionParticle.Play();
     }
 
     public static bool IsGameOver()
