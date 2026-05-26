@@ -29,12 +29,12 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
-        jumpAction.Enable();
+        inputActions.FindActionMap("Player").Enable();
     }
 
     private void OnDisable()
     {
-        jumpAction.Disable();
+        inputActions.FindActionMap("Player").Disable();
     }
     void Start()
     {
